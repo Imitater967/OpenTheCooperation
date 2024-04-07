@@ -1,13 +1,29 @@
 package git.imitater967.otc.accounting.po
 
+import org.jetbrains.exposed.sql.Table
 import java.math.BigDecimal
 
 //记账凭证条目,和记账凭证表配合使用
 data class AccountingDocumentItem(
-    val bodyId: Long, //凭证体ID
+    val id: UInt,
+    val tableId: UInt, //凭证体ID
     val summary: String, //摘要
-    val firstLevelSubject: UInt, //主科目ID
-    val secondLevelObject: UInt, //明细科目ID
-    val debit: Boolean, //是否借
+    val firstLevelSubject: UShort, //主科目ID
+    val secondLevelSubject: UShort, //明细科目ID
+    val isDebit: Boolean, //是否借
     val amount: BigDecimal, //金额
 )
+
+
+object AccountingDocumentItems: Table(){
+    val id = uinteger("id")
+    val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
+    val summary = varchar("attachmentId",16)
+    val firstLevelSubject = ushort("firstLevelSubject")
+    val secondLevelSubject = ushort("secondLevelSubject")
+    val isDebit = bool("isDebit")
+    val amount = decimal("amount",16,2)
+
+    override val  primaryKey = PrimaryKey(id)
+}
+
