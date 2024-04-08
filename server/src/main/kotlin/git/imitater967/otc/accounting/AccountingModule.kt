@@ -1,5 +1,6 @@
 package git.imitater967.otc.accounting
 
+import git.imitater967.otc.accounting.bo.AccountingConfiguration
 import git.imitater967.otc.accounting.so.AccountingService
 import git.imitater967.otc.database.DatabaseManager
 import git.imitater967.otc.database.DatabaseManagerImpl
@@ -20,4 +21,5 @@ fun Route.registerAccountingRoute(){
 }
 val accountingModule = module {
     single<AccountingService>(null, true) { AccountingService() }
+    singleOf(::AccountingConfiguration)
 }
