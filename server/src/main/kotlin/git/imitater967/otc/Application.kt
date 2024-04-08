@@ -4,6 +4,7 @@ import Greeting
 import SERVER_PORT
 import git.imitater967.otc.accounting.accountingModule
 import git.imitater967.otc.accounting.registerAccountingRoute
+import git.imitater967.otc.common.commonModule
 import git.imitater967.otc.database.DatabaseManager
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -29,7 +30,8 @@ fun Application.module() {
         slf4jLogger()
         allowOverride(false)
         modules(
-            accountingModule
+            accountingModule,
+            commonModule,
         )
     }
     routing {

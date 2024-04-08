@@ -1,5 +1,6 @@
 package git.imitater967.otc.accounting
 
+import git.imitater967.otc.accounting.so.AccountingService
 import git.imitater967.otc.database.DatabaseManager
 import git.imitater967.otc.database.DatabaseManagerImpl
 import io.ktor.server.application.call
@@ -18,5 +19,5 @@ fun Route.registerAccountingRoute(){
     }
 }
 val accountingModule = module {
-    single<DatabaseManager>(null,true) { DatabaseManagerImpl()  }
+    single<AccountingService>(null, true) { AccountingService() }
 }

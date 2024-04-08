@@ -1,4 +1,4 @@
-package git.imitater967.otc.accounting.po
+package git.imitater967.otc.accounting.dao
 
 //这里采用util.Date,因为是会计凭证所以我们需要精确到小时
 import org.jetbrains.exposed.sql.Table
@@ -15,7 +15,7 @@ data class AccountingDocumentTable(
     val reviewerId: UInt, //复核员ID
 )
 
-object AccountingDocumentTables: Table() {
+object AccountingDocumentTables: Table("accounting_document_table") {
     val id = uinteger("id")
     val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
     val date = datetime("date")

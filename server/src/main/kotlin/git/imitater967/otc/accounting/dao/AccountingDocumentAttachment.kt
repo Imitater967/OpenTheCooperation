@@ -1,4 +1,4 @@
-package git.imitater967.otc.accounting.po
+package git.imitater967.otc.accounting.dao
 
 import org.jetbrains.exposed.sql.Table
 
@@ -9,7 +9,7 @@ data class AccountingDocumentAttachment(
     val attachmentId: UInt //附件ID, 存bucket用
 )
 
-object AccountingDocumentAttachments: Table(){
+object AccountingDocumentAttachments: Table("accounting_document_attachment"){
     val id = uinteger("id")
     val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
     val attachmentID = uinteger("attachmentId")

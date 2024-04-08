@@ -1,4 +1,4 @@
-package git.imitater967.otc.accounting.po
+package git.imitater967.otc.accounting.dao
 
 import org.jetbrains.exposed.sql.Table
 import java.math.BigDecimal
@@ -15,7 +15,7 @@ data class AccountingDocumentItem(
 )
 
 
-object AccountingDocumentItems: Table(){
+object AccountingDocumentItems: Table("accounting_document_item"){
     val id = uinteger("id")
     val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
     val summary = varchar("attachmentId",16)

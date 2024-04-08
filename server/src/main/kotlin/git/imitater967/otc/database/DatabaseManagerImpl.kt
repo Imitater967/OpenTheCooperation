@@ -1,13 +1,11 @@
 package git.imitater967.otc.database
 
-import git.imitater967.otc.accounting.po.AccountingDocumentAttachments
-import git.imitater967.otc.accounting.po.AccountingDocumentItems
-import git.imitater967.otc.accounting.po.AccountingDocumentTables
+import git.imitater967.otc.accounting.dao.AccountingDocumentAttachments
+import git.imitater967.otc.accounting.dao.AccountingDocumentItems
+import git.imitater967.otc.accounting.dao.AccountingDocumentTables
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.koin.ktor.ext.inject
-import org.slf4j.Logger
 
 class DatabaseManagerImpl: DatabaseManager {
     val driverClassName = "org.h2.Driver"
