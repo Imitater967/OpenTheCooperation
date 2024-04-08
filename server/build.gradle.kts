@@ -8,7 +8,7 @@ group = "git.imitater967.otc"
 version = "1.0.0"
 application {
     mainClass.set("git.imitater967.otc.ApplicationKt")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "true"}")
 }
 
 dependencies {
@@ -25,6 +25,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.ktor)
+    implementation(libs.koin.slf4j)
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
 }

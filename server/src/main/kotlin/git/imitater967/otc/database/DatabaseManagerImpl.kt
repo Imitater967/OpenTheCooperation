@@ -5,16 +5,16 @@ import git.imitater967.otc.accounting.po.AccountingDocumentItems
 import git.imitater967.otc.accounting.po.AccountingDocumentTables
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.exposedLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.ktor.ext.inject
+import org.slf4j.Logger
 
 class DatabaseManagerImpl: DatabaseManager {
     val driverClassName = "org.h2.Driver"
     val jdbcURL = "jdbc:h2:file:./build/db"
     val database: Database;
-    constructor(){
-        database = connect();
-        exposedLogger.info("Connecting to database")
+    init{
+        database = connect()
         transaction(database) {
             SchemaUtils.create(AccountingDocumentAttachments)
             SchemaUtils.create(AccountingDocumentItems)

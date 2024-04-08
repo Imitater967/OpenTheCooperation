@@ -2,19 +2,21 @@ package git.imitater967.otc.accounting
 
 import git.imitater967.otc.database.DatabaseManager
 import git.imitater967.otc.database.DatabaseManagerImpl
+import io.ktor.server.application.call
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import org.koin.core.KoinApplication
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 
 fun Route.registerAccountingRoute(){
     get("/accounting") {
-        
+        call.respondText("Accounting Module")
     }
 }
-fun KoinApplication.registerAccountingModule(){
-    module {
-        single<DatabaseManager> { DatabaseManagerImpl() }
-    }
+val accountingModule = module {
+    single<DatabaseManager>(null,true) { DatabaseManagerImpl()  }
 }

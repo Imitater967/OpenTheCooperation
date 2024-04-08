@@ -44,8 +44,9 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
 h2 = { module = "com.h2database:h2", version.ref = "h2"}
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
-koin-core = { module = "io.insert-koin:koin-core" }
-koin-ktor = { module = "io.insert-koin:koin-ktor" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-bom" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-bom" }
+koin-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-bom" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
