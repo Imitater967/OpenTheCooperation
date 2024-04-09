@@ -10,6 +10,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import org.koin.core.KoinApplication
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -20,6 +21,10 @@ fun Route.registerAccountingRoute(){
     }
 }
 val accountingModule = module {
-    single<AccountingService>(null, true) { AccountingService() }
-    singleOf(::AccountingConfiguration)
+    singleOf(::AccountingService){
+        createdAtStart()
+    }
+    singleOf(::AccountingConfiguration){
+        createdAtStart()
+    }
 }

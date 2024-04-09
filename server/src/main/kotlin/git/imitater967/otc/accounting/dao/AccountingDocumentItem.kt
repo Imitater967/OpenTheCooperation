@@ -16,7 +16,7 @@ data class AccountingDocumentItem(
 
 
 object AccountingDocumentItems: Table("accounting_document_item"){
-    val id = uinteger("id")
+    val id = uinteger("id").autoIncrement()
     val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
     val summary = varchar("attachmentId",16)
     val firstLevelSubject = ushort("firstLevelSubject")

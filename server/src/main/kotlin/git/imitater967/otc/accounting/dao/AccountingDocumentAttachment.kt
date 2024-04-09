@@ -10,7 +10,7 @@ data class AccountingDocumentAttachment(
 )
 
 object AccountingDocumentAttachments: Table("accounting_document_attachment"){
-    val id = uinteger("id")
+    val id = uinteger("id").autoIncrement()
     val tableId = uinteger(ACCOUNTING_DOCUMENT_TABLE_ID)
     val attachmentID = uinteger("attachmentId")
 
