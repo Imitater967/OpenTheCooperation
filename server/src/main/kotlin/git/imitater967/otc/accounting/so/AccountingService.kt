@@ -4,6 +4,7 @@ import git.imitater967.otc.accounting.bo.AccountingConfiguration
 import git.imitater967.otc.accounting.dao.AccountingDocumentItems
 import git.imitater967.otc.accounting.dao.AccountingDocumentTables
 import git.imitater967.otc.common.bo.Organization
+import git.imitater967.otc.common.bo.Project
 import git.imitater967.otc.common.bo.Sponsor
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -18,15 +19,6 @@ import java.time.LocalDateTime
 
 class AccountingService(val configuration: AccountingConfiguration) {
     fun donateMoney(sponsor: Sponsor, organization: Organization, amount: BigDecimal) {
-        fun insertDocumentTable(): InsertStatement<Number> {
-            val table = transaction {
-                AccountingDocumentTables.insert {
-                    it[date] = LocalDateTime.now(configuration.zoneId);
-                }
-
-            }
-            return table
-        }
 
         //借： 银行存款
         //贷： 接受捐赠
@@ -60,5 +52,47 @@ class AccountingService(val configuration: AccountingConfiguration) {
 
     }
 
+    fun assignMoney(organization: Organization, project: Project, amount: BigDecimal) {
+
+        //借： 项目资金
+        //贷： 银行存款
+        val donateSubjectName = configuration.subjectProjectBalance;
+        val bankSubjectName = configuration.subjectBankBalance;
+        transaction {
+            //先执行插入
+            val table = insertDocumentTable()
+            var tableId = table.get(AccountingDocumentTables.id);
+            //贷
+            AccountingDocumentItems.insert {
+                it[this.tableId] = tableId
+                it[summary] = "${project.name}分配${amount}"
+                it[firstLevelSubject] = bankSubjectName.id
+                it[secondLevelSubject] = project.id
+                it[isDebit] = false
+                it[this.amount] = amount
+            }
+            //借
+            AccountingDocumentItems.insert {
+                it[this.tableId] = tableId
+                it[summary] = "${project.name}分配${amount}"
+                it[firstLevelSubject] = project.id
+                it[secondLevelSubject] = 0u
+                it[isDebit] = true
+                it[this.amount] = amount
+            }
+
+        }
+    }
+
+
+    fun insertDocumentTable(): InsertStatement<Number> {
+        val table = transaction {
+            AccountingDocumentTables.insert {
+                it[date] = LocalDateTime.now(configuration.zoneId);
+            }
+
+        }
+        return table
+    }
 
 }
