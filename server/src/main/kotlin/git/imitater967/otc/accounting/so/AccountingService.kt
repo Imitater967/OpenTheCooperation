@@ -28,18 +28,33 @@ class AccountingService(val configuration: AccountingConfiguration) {
             return table
         }
 
+        //借： 银行存款
+        //贷： 接受捐赠
         val donateSubjectName = configuration.subjectSponsorDonate;
-        val bankBalanceSubjectName = configuration.subjectBankBalance;
+        val bankSubjectName = configuration.subjectBankBalance;
         transaction {
             //先执行插入
             val table = insertDocumentTable()
             var tableId = table.get(AccountingDocumentTables.id);
+            //贷
             AccountingDocumentItems.insert {
                 it[this.tableId] = tableId
                 it[summary] = "${sponsor.name}捐赠${amount}"
                 it[firstLevelSubject] = donateSubjectName.id
-                it[secondLevelSubject] = sponsor.id;
+                it[secondLevelSubject] = sponsor.id
+                it[isDebit] = false
+                it[this.amount] = amount
             }
+            //借
+            AccountingDocumentItems.insert {
+                it[this.tableId] = tableId
+                it[summary] = "${sponsor.name}捐赠${amount}"
+                it[firstLevelSubject] = bankSubjectName.id
+                it[secondLevelSubject] = sponsor.id
+                it[isDebit] = true
+                it[this.amount] = amount
+            }
+
         }
         sponsor.addBudget(amount)
 
